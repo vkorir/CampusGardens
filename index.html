@@ -10,12 +10,20 @@
    		<div id="map"></div>
    		<div id="floating-panel">
 			<p style="font-size: 11px;">visualize by</p>
-   			<a class="by" onClick="byAcreage()">acreage</a><br>
-   			<a class="by" onClick="bySizeOfHarvest()">size of harvest</a><br>
-			<a class="by" onClick="byDistance()">distance</a>
+   			<a class="by" onClick="javascript:byAcreage()">acreage</a><br>
+   			<a class="by" onClick="javascript:bySizeOfHarvest()">size of harvest</a><br>
+			<a class="by" onClick="javascript:byDistance()">distance</a>
    		</div>
-   		<div id="garden-info"><img height="100%" src="img/sidebar.png"></div>
-<!--   		<div id="sidebar"><img src="img/sidebar.png"/></div>-->
+   		<div id="sidebar" class="garden-info"><img src="img/sidebar.png"></div>
+   		<div id="soga" class="garden-info" style="visibility: hidden;"><img src="img/blake.png"></div>
+   		<div id="blake" class="garden-info" style="visibility: hidden;"><img src="img/blake.png"></div>
+   		<div id="clark" class="garden-info" style="visibility: hidden;"><img src="img/blake.png"></div>
+   		<div id="golden" class="garden-info" style="visibility: hidden;"><img src="img/blake.png"></div>
+   		<div id="gill" class="garden-info" style="visibility: hidden;"><img src="img/blake.png"></div>
+   		<div id="casa" class="garden-info" style="visibility: hidden;"><img src="img/blake.png"></div>
+   		<div id="cloyne" class="garden-info" style="visibility: hidden;"><img src="img/blake.png"></div>
+   		<div id="botanical" class="garden-info" style="visibility: hidden;"><img src="img/blake.png"></div>
+   		<div id="oxford" class="garden-info" style="visibility: hidden;"><img src="img/blake.png"></div>
    	</div>
     <div class="container text-center">
         <img class="on-scroll" src="img/on_scroll.png">
@@ -23,65 +31,72 @@
     <script>
         var map;
 		var circles = [];
+		let gardenIds = ["sidebar", "soga", "blake", "clark", "golden", "gill", "casa", "cloyne", "botanical", "oxford"];
+		let names = {"soga": "Student Organic Garden Association", 
+				   "blake": "Blake Garden", "clark": "Clark Kerr Garden", 
+				   "golden": "Golden Garden", "gill": "UC Gill Tract Community Farm", 
+					"casa": "Casa Zimbabwe", "cloyne": "Cloyne Court Hotel", 
+				   "botanical": "UC Botanical Garden", "oxford": "Oxford Tract"}
 		var gardens = {
 			SOGA: {
-				name: "Student Organic Garden Association",
+				name: "soga",
 				center: {lat: 37.8767, lng: -122.2676},
 				acreage: 1.5,
 				sizeOfHarvest: 3,
 				distance: 4
 			},
 			BlakeGarden: {
-				name: "Blake Garden",
+				name: "blake",
 				center: {lat: 37.913539, lng: -122.284945},
 				acreage: 4,
 				sizeOfHarvest: 1,
-				distance: 1
+				distance: 1,
+				imgId: "blake"
 			},
 			ClarkCampus: {
-				name: "Clark Kerr Garden",
+				name: "clark",
 				center: {lat: 37.8641918, lng: -122.2491377},
 				acreage: 1,
 				sizeOfHarvest: 3,
 				distance: 3
 			},
 			GoldenGarden: {
-				name: "Golden Garden",
+				name: "golden",
 				center: {lat: 37.864455, lng: -122.246180},
 				acreage: 1.5,
 				sizeOfHarvest: 1,
 				distance: 1
 			},
 			UCGillTract: {
-				name: "UC Gill Tract Community Farm",
+				name: "gill",
 				center: {lat: 37.8864, lng: -122.2982},
 				acreage: 2.5,
 				sizeOfHarvest: 6,
 				distance: 3
 			},
 			CasaZimbabwe: {
-				name: "Casa Zimbabwe",
+				name: "casa",
 				center: {lat: 37.875759, lng: -122.261298},
 				acreage: 1,
 				sizeOfHarvest: 1,
 				distance: 1
 			},
 			CloyneCourt: {
-				name: "Cloyne Court Hotel",
+				name: "cloyne",
 				center: {lat: 37.876127, lng: -122.258085},
 				acreage: 1,
 				sizeOfHarvest: 1,
 				distance: 1
 			},
 			UCBotanicalGarden: {
-				name: "UC Botanical Garden",
+				name: "botanical",
 				center: {lat: 37.875163, lng: -122.238594},
 				acreage: 5,
 				sizeOfHarvest: 1,
 				distance: 1
 			},
 			OxfordTract: {
-				name: "Oxford Tract",
+				name: "oxford",
 				center: {lat: 37.875372, lng: -122.267515},
 				acreage: 1.5,
 				sizeOfHarvest: 1,
@@ -159,7 +174,7 @@
 						strokeOpacity: 1.0,
 						fillOpacity: 0.8
 					});
-					gardensInfoWindow.setContent(this.name);
+					gardensInfoWindow.setContent(names[this.name]);
 					gardensInfoWindow.setPosition(this.center);
 					gardensInfoWindow.open(map);
 				});
@@ -170,12 +185,18 @@
 					});
 					gardensInfoWindow.close();
 				});
-				google.maps.event.addListener(gardenCircle, 'click', function(event) {
-					alert('Eimen!')
+				google.maps.event.addListener(gardenCircle, 'click', function(marker, event) {
+					hideInfos();
+					document.getElementById(this.name).style.visibility = 'visible';
 				});
 			}
         }
 		
+		function hideInfos() {
+			for (var id in gardenIds) {
+				document.getElementById(gardenIds[id]).style.visibility = 'hidden';
+			}
+		}
 		function byAcreage() {
 			for (var garden in gardens) {
 				var radius = gardens[garden].acreage * 100;
