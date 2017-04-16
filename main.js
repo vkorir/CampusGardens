@@ -143,7 +143,7 @@ function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
         center: {
             lat: 37.8895033,
-            lng: -122.2607468
+            lng: -122.2707468
         },
         zoom: 14,
         disableDefaultUI: true,
@@ -305,27 +305,27 @@ function initMap() {
         });
 		
         gardens[garden].circle = gardenCircle;
-        var gardensInfoWindow = new google.maps.InfoWindow();
-
-        google.maps.event.addListener(gardenCircle, 'mouseover', function(event) {
+        var gardenName = new google.maps.InfoWindow();
+		
+		google.maps.event.addListener(gardenCircle, 'click', function(event) {
+            hideInfos();
+            document.getElementById(this.name).style.visibility = 'visible';
+        });
+        google.maps.event.addListener(gardenCircle, 'mousemove', function(event) {
             this.setOptions({
                 strokeOpacity: 1.0,
                 fillOpacity: 0.8
             });
-//            gardensInfoWindow.setContent(names[this.name]);
-//            gardensInfoWindow.setPosition(event.latLng);
-//            gardensInfoWindow.open(map);
+            gardenName.setContent(names[this.name]);
+            gardenName.setPosition(this.getCenter());
+            gardenName.open(map);
         });
         google.maps.event.addListener(gardenCircle, 'mouseout', function(event) {
             this.setOptions({
                 strokeOpacity: 0.8,
                 fillOpacity: 0.6
             });
-//            gardensInfoWindow.close();
-        });
-        google.maps.event.addListener(gardenCircle, 'click', function(event) {
-            hideInfos();
-            document.getElementById(this.name).style.visibility = 'visible';
+            gardenName.close();
         });
     }
 	map.addListener('click', hideInfos);
