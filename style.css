@@ -3,16 +3,6 @@ html, body {
 	margin: 0;
 	padding: 0;
 }
-.container {
-    text-align: center;
-	height: 100%;
-}
-.map-container {
-	height: 100%;
-}
-.on-scroll {
-    width: 100%;
-}
 #map, #sidebar {
 	display: inline-block;
 	margin: 0;
@@ -22,25 +12,35 @@ html, body {
 	height: 100%;
 	width: 100%;
 }
-#sidebar {
-	position: absolute;
-	height: 100%;
-}
-#sidebar img {
-	right: 0;
-	height: 100%;
-	width: min(340px, 25%);
-	
-}
 #floating-panel {
 	position: absolute;
+	font-family: "Open Sans";
+	font-size: 18px;
+	background-image: url("img/floating-panel.png");
+	width: 330px;
+	height: 150px;
   	bottom: 0;
   	left: 0;
   	z-index: 5;
 	color: #fff;
-  	background-color: #003262;
   	border: 0;
 	padding: 5px;
+}
+.container {
+    text-align: center;
+	height: 100%;
+}
+.map-container {
+	height: calc(100% + 15px);
+}
+.on-scroll {
+	position: absolute;
+	left: 0;
+	margin-top: -15px;
+    width: 100%;
+}
+.space {
+	height: 30px;
 }
 .garden-info {
 	position: absolute;
@@ -49,9 +49,10 @@ html, body {
 	right: 0;
 	z-index: 5;
 	border: 0;
+	overflow: auto;
 }
 .garden-info img {
-	height: 100%;
+	width: 270px;
 }
 .by {
 	cursor: pointer;
