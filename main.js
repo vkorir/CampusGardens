@@ -312,23 +312,23 @@ function initMap() {
                 strokeOpacity: 1.0,
                 fillOpacity: 0.8
             });
-            gardensInfoWindow.setContent(names[this.name]);
-            gardensInfoWindow.setPosition(this.center);
-            gardensInfoWindow.open(map);
+//            gardensInfoWindow.setContent(names[this.name]);
+//            gardensInfoWindow.setPosition(event.latLng);
+//            gardensInfoWindow.open(map);
         });
         google.maps.event.addListener(gardenCircle, 'mouseout', function(event) {
             this.setOptions({
                 strokeOpacity: 0.8,
                 fillOpacity: 0.6
             });
-            gardensInfoWindow.close();
+//            gardensInfoWindow.close();
         });
         google.maps.event.addListener(gardenCircle, 'click', function(event) {
             hideInfos();
             document.getElementById(this.name).style.visibility = 'visible';
         });
     }
-	map.addListener('click', hideInfos)
+	map.addListener('click', hideInfos);
 }
 
 function hideInfos() {
