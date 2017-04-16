@@ -18,15 +18,18 @@
 			<a class="by" onClick="javascript:byDistance()">distance</a>
    		</div>
    		<div id="sidebar" class="garden-info"><img src="img/sidebar.png"></div>
-   		<div id="soga" class="garden-info" style="visibility: hidden;"><a href="https://www.ocf.berkeley.edu/~soga/wordpress/" target="_blank"><img src="img/blake.png"></a></div>
+   		<div id="soga" class="garden-info" style="visibility: hidden;"><a href="https://www.ocf.berkeley.edu/~soga/wordpress/" target="_blank"><img src="img/soga.png"></a></div>
    		<div id="blake" class="garden-info" style="visibility: hidden;"><a href="http://blakegarden.ced.berkeley.edu/" target="_blank"><img src="img/blake.png"></a></div>
-   		<div id="clark" class="garden-info" style="visibility: hidden;"><a href="https://www.facebook.com/ClarkKerrGardenCalDining/?fref=ts" target="_blank"><img src="img/blake.png"></a></div>
-   		<div id="golden" class="garden-info" style="visibility: hidden;"><img src="img/blake.png"></div>
-   		<div id="gill" class="garden-info" style="visibility: hidden;"><a href="http://ucgilltractfarm.wixsite.com/gilltract" target="_blank"><img src="img/blake.png"></a></div>
-   		<div id="casa" class="garden-info" style="visibility: hidden;"><a href="https://www.bsc.coop/" target="_blank"><img src="img/blake.png"></a></div>
-   		<div id="cloyne" class="garden-info" style="visibility: hidden;"><a href="https://www.bsc.coop/" target="_blank"><img src="img/blake.png"></a></div>
-   		<div id="botanical" class="garden-info" style="visibility: hidden;"><a href="http://botanicalgarden.berkeley.edu/" target="_blank"><img src="img/blake.png"></a></div>
-   		<div id="oxford" class="garden-info" style="visibility: hidden;"><a href="https://nature.berkeley.edu/oxford-facility/" target="_blank"><img src="img/blake.png"></a></div>
+   		<div id="clark" class="garden-info" style="visibility: hidden;"><a href="https://www.facebook.com/ClarkKerrGardenCalDining/?fref=ts" target="_blank"><img src="img/clark.png"></a></div>
+   		<div id="golden" class="garden-info" style="visibility: hidden;"><img src="img/golden.png"></div>
+   		<div id="gill" class="garden-info" style="visibility: hidden;"><a href="http://ucgilltractfarm.wixsite.com/gilltract" target="_blank"><img src="img/gill.png"></a></div>
+   		<div id="casa" class="garden-info" style="visibility: hidden;"><a href="https://www.bsc.coop/" target="_blank"><img src="img/casa.png"></a></div>
+   		<div id="cloyne" class="garden-info" style="visibility: hidden;"><a href="https://www.bsc.coop/" target="_blank"><img src="img/cloyne.png"></a></div>
+   		<div id="botanical" class="garden-info" style="visibility: hidden;"><a href="http://botanicalgarden.berkeley.edu/" target="_blank"><img src="img/botanical.png"></a></div>
+   		<div id="oxford" class="garden-info" style="visibility: hidden;"><a href="https://nature.berkeley.edu/oxford-facility/" target="_blank"><img src="img/oxford.png"></a></div>
+   		<div id="village" class="garden-info" style="visibility: hidden;"><a href="http://www.ucvillagegarden.net/" target="_blank"><img src="img/village.png"></a></div>
+		<div id="campus" class="garden-info" style="visibility: hidden;"><img src="img/campus.png"></div>
+  		<div id="multicultural" class="garden-info" style="visibility: hidden;"><img src="img/multicultural.png"></div>
    	</div>
     <div class="container text-center">
         <img class="on-scroll" src="img/on_scroll.png">
@@ -34,12 +37,14 @@
     <script>
         var map;
 		var circles = [];
-		let gardenIds = ["sidebar", "soga", "blake", "clark", "golden", "gill", "casa", "cloyne", "botanical", "oxford"];
+		let gardenIds = ["sidebar", "soga", "blake", "clark", "golden", "gill", "casa", "cloyne", "botanical", "oxford", "village", "campus", "multicultural"];
 		let names = {"soga": "Student Organic Garden Association", 
 				   "blake": "Blake Garden", "clark": "Clark Kerr Garden", 
 				   "golden": "Golden Garden", "gill": "UC Gill Tract Community Farm", 
 					"casa": "Casa Zimbabwe", "cloyne": "Cloyne Court Hotel", 
-				   "botanical": "UC Botanical Garden", "oxford": "Oxford Tract"}
+				   "botanical": "UC Botanical Garden", "oxford": "Oxford Tract",
+					"village": "UC Village", "campus": "Campus Ecological Action and Sustainable Design Gardens",
+					"multicultural": "Multicultural Community Center"};
 		var gardens = {
 			SOGA: {
 				name: "soga",
@@ -104,7 +109,28 @@
 				acreage: 1.5,
 				sizeOfHarvest: 1,
 				distance: 3
-			}
+			},
+			UCVillage: {
+				name: "village",
+				center: {lat: 37.873620, lng: -122.262651},
+				acreage: 1,
+				sizeOfHarvest: 1,
+				distance: 1
+			},
+			CampusGarden: {
+				name: "campus",
+				center: {lat: 37.873687, lng: -122.265765},
+				acreage: 1,
+				sizeOfHarvest: 1,
+				distance: 1
+			},
+			Multicultural: {
+				name: "multicultural",
+				center: {lat: 37.8691, lng: -122.2597},
+				acreage: 1,
+				sizeOfHarvest: 1,
+				distance: 1
+			},
 		}
         function initMap() {
             map = new google.maps.Map(document.getElementById('map'), {
