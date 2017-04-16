@@ -3,11 +3,6 @@ html, body {
 	margin: 0;
 	padding: 0;
 }
-#map, #sidebar {
-	display: inline-block;
-	margin: 0;
-	padding: 0;
-}
 #map {
 	height: 100%;
 	width: 100%;
@@ -42,16 +37,28 @@ html, body {
 .space {
 	height: 30px;
 }
+.sidebar {
+	position: absolute;
+	z-index: 5;
+	top: 0;
+	right: 0;
+}
+.sidebar img {
+	height: 380px;
+}
 .garden-info {
 	position: absolute;
-	height: 100%;
-	top: 0;
+	height: calc(100% - 380px);
+	top: 380px;
 	right: 0;
 	z-index: 5;
 	border: 0;
-	overflow: auto;
+	overflow-y: scroll;
 }
 .garden-info img {
+	margin-bottom: -20px;
+}
+.garden-info img, .sidebar img {
 	width: 270px;
 }
 .by {
