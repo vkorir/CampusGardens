@@ -10,9 +10,9 @@
    		<div id="map"></div>
    		<div id="floating-panel">
 			<p style="font-size: 11px;">visualize by</p>
-   			<a class="by" onClick="alert()">acerage</a><br>
-   			<a class="by" onClick="()">size of harvest</a><br>
-			<a class="by" onClick="()">accessibility</a>
+   			<a class="by" onClick="byAcreage()">acreage</a><br>
+   			<a class="by" onClick="bySizeOfHarvest()">size of harvest</a><br>
+			<a class="by" onClick="byDistance()">distance</a>
    		</div>
    		<div id="garden-info"><img height="100%" src="img/sidebar.png"></div>
 <!--   		<div id="sidebar"><img src="img/sidebar.png"/></div>-->
@@ -27,65 +27,65 @@
 			SOGA: {
 				name: "Student Organic Garden Association",
 				center: {lat: 37.8767, lng: -122.2676},
-				acerage: 1.5,
-				sizeOfHarvest: 0,
-				accessibility: 0
+				acreage: 1.5,
+				sizeOfHarvest: 3,
+				distance: 4
 			},
 			BlakeGarden: {
 				name: "Blake Garden",
 				center: {lat: 37.913539, lng: -122.284945},
-				acerage: 4,
-				sizeOfHarvest: 0,
-				accessibility: 0
+				acreage: 4,
+				sizeOfHarvest: 1,
+				distance: 1
 			},
 			ClarkCampus: {
 				name: "Clark Kerr Garden",
 				center: {lat: 37.8641918, lng: -122.2491377},
-				acerage: 1,
-				sizeOfHarvest: 0,
-				accessibility: 0
+				acreage: 1,
+				sizeOfHarvest: 3,
+				distance: 3
 			},
 			GoldenGarden: {
 				name: "Golden Garden",
 				center: {lat: 37.864455, lng: -122.246180},
-				acerage: 1.5,
-				sizeOfHarvest: 0,
-				accessibility: 0
+				acreage: 1.5,
+				sizeOfHarvest: 1,
+				distance: 1
 			},
 			UCGillTract: {
 				name: "UC Gill Tract Community Farm",
 				center: {lat: 37.8864, lng: -122.2982},
-				acerage: 2.5,
-				sizeOfHarvest: 0,
-				accessibility: 0
+				acreage: 2.5,
+				sizeOfHarvest: 6,
+				distance: 3
 			},
 			CasaZimbabwe: {
 				name: "Casa Zimbabwe",
 				center: {lat: 37.875759, lng: -122.261298},
-				acerage: 1,
-				sizeOfHarvest: 0,
-				accessibility: 0
+				acreage: 1,
+				sizeOfHarvest: 1,
+				distance: 1
 			},
 			CloyneCourt: {
 				name: "Cloyne Court Hotel",
 				center: {lat: 37.876127, lng: -122.258085},
-				acerage: 1,
-				sizeOfHarvest: 0,
-				accessibility: 0
+				acreage: 1,
+				sizeOfHarvest: 1,
+				distance: 1
 			},
 			UCBotanicalGarden: {
 				name: "UC Botanical Garden",
 				center: {lat: 37.875163, lng: -122.238594},
-				acerage: 5,
-				sizeOfHarvest: 0,
-				accessibility: 0
+				acreage: 5,
+				sizeOfHarvest: 1,
+				distance: 1
 			},
 			OxfordTract: {
 				name: "Oxford Tract",
 				center: {lat: 37.875372, lng: -122.267515},
-				acerage: 1.5,
-				sizeOfHarvest: 0,
-				accessibility: 0
+				acreage: 1.5,
+				sizeOfHarvest: 1,
+				distance: 3
 			}
 		}
         function initMap() {
@@ -141,7 +141,7 @@
 			//BUBBLES
 			for (var garden in gardens) {
 				var gardenCircle = new google.maps.Circle({
-					garden: garden,
+					name: gardens[garden].name,
 					strokeColor: '#afdda4',
 					strokeOpacity: 0.8,
 					strokeWeight: 1,
@@ -149,9 +149,9 @@
 					fillOpacity: 0.6,
 					map: map,
 					center: gardens[garden].center,
-					radius: gardens[garden].acerage * 100
+					radius: gardens[garden].acreage * 100
 				});
-				circles.push(gardenCircle);
+				gardens[garden].circle = gardenCircle;
 				var gardensInfoWindow = new google.maps.InfoWindow();
 
 				google.maps.event.addListener(gardenCircle, 'mouseover', function (event) {
@@ -159,7 +159,7 @@
 						strokeOpacity: 1.0,
 						fillOpacity: 0.8
 					});
-					gardensInfoWindow.setContent(gardens[garden].name);
+					gardensInfoWindow.setContent(this.name);
 					gardensInfoWindow.setPosition(this.center);
 					gardensInfoWindow.open(map);
 				});
@@ -174,8 +174,26 @@
 					alert('Eimen!')
 				});
 			}
-			
         }
+		
+		function byAcreage() {
+			for (var garden in gardens) {
+				var radius = gardens[garden].acreage * 100;
+				gardens[garden].circle.setRadius(radius);
+			}
+		}
+		function bySizeOfHarvest() {
+			for (var garden in gardens) {
+				var radius = gardens[garden].sizeOfHarvest * 100;
+				gardens[garden].circle.setRadius(radius);
+			}
+		}
+		function byDistance() {
+			for (var garden in gardens) {
+				var radius = gardens[garden].distance * 100;
+				gardens[garden].circle.setRadius(radius);
+			}
+		}
 		function campusHover(event) {
 			var content = '<b>UC Berkeley Campus</b>';
 			campusInfoWindow.setContent(content);
