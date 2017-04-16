@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Campus Gardens</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+   	<div class="map-container">
+   		<div id="map"></div>
+   		<div id="floating-panel">
+			<p style="font-size: 11px;">visualize by</p>
+   			<a class="by" onClick="alert()">acerage</a><br>
+   			<a class="by" onClick="()">size of harvest</a><br>
+			<a class="by" onClick="()">accessibility</a>
+   		</div>
+   		<div id="garden-info"><img height="100%" src="img/sidebar.png"></div>
+<!--   		<div id="sidebar"><img src="img/sidebar.png"/></div>-->
+   	</div>
+    <div class="container text-center">
+        <img class="on-scroll" src="img/on_scroll.png">
+    </div>
+    <script>
+        var map;
+		var circles = [];
+		var gardens = {
+			SOGA: {
+				name: "Student Organic Garden Association",
+				center: {lat: 37.8767, lng: -122.2676},
+				acerage: 1.5,
+				sizeOfHarvest: 0,
+				accessibility: 0
+			},
+			BlakeGarden: {
+				name: "Blake Garden",
+				center: {lat: 37.913539, lng: -122.284945},
+				acerage: 4,
+				sizeOfHarvest: 0,
+				accessibility: 0
+			},
+			ClarkCampus: {
+				name: "Clark Kerr Garden",
+				center: {lat: 37.8641918, lng: -122.2491377},
+				acerage: 1,
+				sizeOfHarvest: 0,
+				accessibility: 0
+			},
+			GoldenGarden: {
+				name: "Golden Garden",
+				center: {lat: 37.864455, lng: -122.246180},
+				acerage: 1.5,
+				sizeOfHarvest: 0,
+				accessibility: 0
+			},
+			UCGillTract: {
+				name: "UC Gill Tract Community Farm",
+				center: {lat: 37.8864, lng: -122.2982},
+				acerage: 2.5,
+				sizeOfHarvest: 0,
+				accessibility: 0
+			},
+			CasaZimbabwe: {
+				name: "Casa Zimbabwe",
+				center: {lat: 37.875759, lng: -122.261298},
+				acerage: 1,
+				sizeOfHarvest: 0,
+				accessibility: 0
+			},
+			CloyneCourt: {
+				name: "Cloyne Court Hotel",
+				center: {lat: 37.876127, lng: -122.258085},
+				acerage: 1,
+				sizeOfHarvest: 0,
+				accessibility: 0
+			},
+			UCBotanicalGarden: {
+				name: "UC Botanical Garden",
+				center: {lat: 37.875163, lng: -122.238594},
+				acerage: 5,
+				sizeOfHarvest: 0,
+				accessibility: 0
+			},
+			OxfordTract: {
+				name: "Oxford Tract",
+				center: {lat: 37.875372, lng: -122.267515},
+				acerage: 1.5,
+				sizeOfHarvest: 0,
+				accessibility: 0
+			}
+		}
+        function initMap() {
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: {lat: 37.8895033, lng: -122.2607468},
+                zoom: 14,
+				disableDefaultUI: true,
+				scrollwheel: false,
+				mapTypeId: 'satellite'
+            });
+			
+			var CampusCoordinates = [
+				{lat: 37.874071, lng: -122.266068},
+				{lat: 37.870780, lng: -122.265554},
+				{lat: 37.868820, lng: -122.266001},
+				{lat: 37.867958, lng: -122.265604},
+				{lat: 37.869761, lng: -122.252499},
+				{lat: 37.871211, lng: -122.252946},
+				{lat: 37.872034, lng: -122.253194},
+				{lat: 37.873444, lng: -122.255229},
+				{lat: 37.875364, lng: -122.256966},
+				{lat: 37.874071, lng: -122.266068}
+			];
+			var Campus = new google.maps.Polygon({
+				map: map,
+				paths: CampusCoordinates,
+				strokeColor: '#3b7ea1',
+				strokeOpacity: 0.8,
+				strokeWeight: 2,
+				fillColor: '#3b7ea1',
+				fillOpacity: 0.5
+			});
+			var campusInfoWindow = new google.maps.InfoWindow({
+				content: 'UC Berkeley Campus',
+				position: {lat: 37.871853, lng:  -122.258423}
+			});
+			
+			google.maps.event.addListener(Campus, 'mouseover', function (event) {
+				this.setOptions({
+					strokeColor: '#003262',
+					fillColor: '#003262'
+				});
+        		campusInfoWindow.open(map);
+			});
+			google.maps.event.addListener(Campus, 'mouseout', function (event) {
+				this.setOptions({
+					strokeColor: '#3b7ea1',
+					fillColor: '#3b7ea1'
+				});
+        		campusInfoWindow.close();
+			});
+			
+			//BUBBLES
+			for (var garden in gardens) {
+				var gardenCircle = new google.maps.Circle({
+					garden: garden,
+					strokeColor: '#afdda4',
+					strokeOpacity: 0.8,
+					strokeWeight: 1,
+					fillColor: '#afdda4',
+					fillOpacity: 0.6,
+					map: map,
+					center: gardens[garden].center,
+					radius: gardens[garden].acerage * 100
+				});
+				circles.push(gardenCircle);
+				var gardensInfoWindow = new google.maps.InfoWindow();
+
+				google.maps.event.addListener(gardenCircle, 'mouseover', function (event) {
+					this.setOptions({
+						strokeOpacity: 1.0,
+						fillOpacity: 0.8
+					});
+					gardensInfoWindow.setContent(gardens[garden].name);
+					gardensInfoWindow.setPosition(this.center);
+					gardensInfoWindow.open(map);
+				});
+				google.maps.event.addListener(gardenCircle, 'mouseout', function (event) {
+					this.setOptions({
+						strokeOpacity: 0.8,
+						fillOpacity: 0.6
+					});
+					gardensInfoWindow.close();
+				});
+				google.maps.event.addListener(gardenCircle, 'click', function(event) {
+					alert('Eimen!')
+				});
+			}
+			
+        }
+		function campusHover(event) {
+			var content = '<b>UC Berkeley Campus</b>';
+			campusInfoWindow.setContent(content);
+			campusInfoWindow.setPosition(event.latLng);
+			campusInfoWindow.open(map);
+		}
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBgWMmOaSJ4YT1BNWKrfnpR2vn-0ntfqhM&callback=initMap"
+    async defer></script>
+</body>
+</html>
