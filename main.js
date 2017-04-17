@@ -110,8 +110,8 @@ var gardens = {
     UCVillage: {
         name: "village",
         center: {
-            lat: 37.874153,
-            lng: -122.285295
+            lat: 37.8837,
+            lng: -122.3056
         },
         acreage: 1,
         sizeOfHarvest: 1,
