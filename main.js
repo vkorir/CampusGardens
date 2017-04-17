@@ -1,7 +1,6 @@
 var map;
-var circles = [];
-let gardenIds = ["soga", "blake", "clark", "golden", "gill", "casa", "cloyne", "botanical", "oxford", "village", "campus", "multicultural"];
-let names = {
+var gardenIds = ["soga", "blake", "clark", "golden", "gill", "casa", "cloyne", "botanical", "oxford", "village", "campus", "multicultural"];
+var names = {
     "soga": "Student Organic Garden Association",
     "blake": "Blake Garden",
     "clark": "Clark Kerr Garden",
